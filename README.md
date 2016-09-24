@@ -2,6 +2,10 @@
 
 cake-orm-enabler is a package to enable the [cakephp/orm](https://github.com/cakephp/orm) in Laravel.
 
+## Requirements
+- [Laravel](https://laravel.com/) or [Lumen](http://lumen.laravel.com/) 5.2.x
+- [CakePHP ORM](https://github.com/cakephp/orm) 5.3.x
+
 ## Installing your project
 
 ### Install via Composer
