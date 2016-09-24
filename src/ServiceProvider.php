@@ -214,6 +214,28 @@ class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
+     * Connection configured flag.
+     *
+     * @param  string $config
+     * @return bool
+     */
+    protected function isConfiguredConnection($config)
+    {
+        return in_array($config, ConnectionManager::configured(), true);
+    }
+
+    /**
+     * Cache configured flag.
+     *
+     * @param  string $config
+     * @return bool
+     */
+    protected function isConfiguredCache($config)
+    {
+        return in_array($config, Cache::configured(), true);
+    }
+
+    /**
      * Persistent flag.
      *
      * @return mixed|null|string
@@ -262,18 +284,22 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     protected function setupConnection()
     {
-        ConnectionManager::config('default', [
-            'className'     => $this->getConnectionClass(),
-            'driver'        => $this->getDriver(),
-            'persistent'    => $this->isPersistent(),
-            'host'          => $this->getHost(),
-            'username'      => $this->getUsername(),
-            'password'      => $this->getPassword(),
-            'database'      => $this->getDatabase(),
-            'encoding'      => $this->getEncording(),
-            'timezone'      => $this->getTimezone(),
-            'cacheMetadata' => $this->isCacheMetadata(), // If true, require "cakephp/cache"
-        ]);
+        // It is set only if the connection information to the database is not set.
+        if (!$this->isConfiguredConnection('default'))
+        {
+            ConnectionManager::config('default', [
+                'className'     => $this->getConnectionClass(),
+                'driver'        => $this->getDriver(),
+                'persistent'    => $this->isPersistent(),
+                'host'          => $this->getHost(),
+                'username'      => $this->getUsername(),
+                'password'      => $this->getPassword(),
+                'database'      => $this->getDatabase(),
+                'encoding'      => $this->getEncording(),
+                'timezone'      => $this->getTimezone(),
+                'cacheMetadata' => $this->isCacheMetadata(), // If true, require "cakephp/cache"
+            ]);
+        }
 
         return $this;
     }
@@ -285,6 +311,13 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     protected function setupCache()
     {
+        // If you are already in the cache settings to ignore.
+        if ($this->isConfiguredCache('_cake_model_'))
+        {
+            return $this;
+        }
+
+        // Only be enabled if the database has been specified to use the cache.
         if ($this->isCacheMetadata())
         {
             Configure::write('Cache._cake_model_', [

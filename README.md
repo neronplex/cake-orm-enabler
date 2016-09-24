@@ -6,7 +6,7 @@ cake-orm-enabler is a package to enable the [cakephp/orm](https://github.com/cak
 
 ### Install via Composer
 ```
-$ composer require neronplex/cake-orm-enabler:"0.0.1"
+$ composer require neronplex/cake-orm-enabler
 ```
 
 ### Adding Service Provider
@@ -18,7 +18,7 @@ Neronplex\CakeORMEnabler\ServiceProvider::class,
 
 In the case of Lumen.
 ```php
-// add line in config/app.php
+// add line in bootstrap/app.php
 $app->register(Neronplex\CakeORMEnabler\ServiceProvider::class);
 ```
 
@@ -31,8 +31,11 @@ In the case of Laravel.
 
 In the case of Lumen.
 ```php
-// add line in config/app.php
-class_alias('Neronplex\CakeORMEnabler\Facades\TableRegistry', 'TableRegistry');
+// add line in bootstrap/app.php
+if (!class_exists('TableRegistry'))
+{
+    class_alias('Neronplex\CakeORMEnabler\Facades\TableRegistry', 'TableRegistry');
+}
 ```
 
 ## Usage
