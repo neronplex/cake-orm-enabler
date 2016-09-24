@@ -15,10 +15,7 @@
   "require": {
     "php": ">=5.5.9",
     "illuminate/support": "^5.0,<5.4",
-    "cakephp/core": "^3.3",
-    "cakephp/datasource": "^3.3",
-    "cakephp/orm": "^3.3",
-    "cakephp/utility": "^3.3"
+    "cakephp/orm": "^3.3"
   },
   "suggest": {
     "cakephp/cache": "^3.3"
