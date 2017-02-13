@@ -22,6 +22,6 @@ class TableRegistry extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'TableRegistry';
+        return 'Cake\ORM\TableRegistry';
     }
 }

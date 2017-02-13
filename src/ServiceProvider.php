@@ -66,7 +66,7 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('TableRegistry', function ($app) {
+        $this->app->singleton('Cake\ORM\TableRegistry', function ($app) {
             return new TableRegistry;
         });
     }
